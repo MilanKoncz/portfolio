@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "buildCommand": "vite build --config vercel.config.mjs",
+    "outputDirectory": "dist",
+    "framework": "vite",
+    "installCommand": "npm install",
+    "routes": [
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/index.html"
+        }
+    ],
+    "env": {
+        "NODE_OPTIONS": "--max-old-space-size=4096"
+    }
+}

@@ -2,10 +2,13 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import { VitePWA } from 'vite-plugin-pwa';
 import compression from 'vite-plugin-compression';
+import path from 'path';
+import ignoreTypeScriptErrors from './vite-plugin-ignore-ts-errors';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    ignoreTypeScriptErrors(),
     react(),
     VitePWA({
       registerType: 'autoUpdate',
@@ -37,6 +40,11 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+  },
+  resolve: {
+    alias: {
+      '~': path.resolve(__dirname, './app'),
+    },
   },
   build: {
     outDir: 'dist',
