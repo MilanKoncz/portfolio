@@ -19,6 +19,10 @@ const Loading = () => (
   </div>
 );
 
+/**
+ * Application routes
+ * Note: Header navigation visibility is controlled by src/config/site.ts
+ */
 const router = createBrowserRouter([
   {
     path: '/',

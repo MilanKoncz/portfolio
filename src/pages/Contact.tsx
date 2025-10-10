@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Loader2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, Instagram, Loader2 } from 'lucide-react';
 import { useLanguage, translations } from '../context/LanguageContext';
+import { siteMeta, socialLinks, contact as contactInfo } from '../config/site';
+import { content } from '../config/content';
 
 interface FormData {
   name: string;
   email: string;
   message: string;
+  // Honeypot: should stay empty; bots often fill every field
+  website?: string;
 }
 
 interface FormErrors {
@@ -18,11 +22,13 @@ interface FormErrors {
 const Contact = () => {
   const { language } = useLanguage();
   const t = translations[language];
+  const c = content[language]?.contact || {};
 
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     message: '',
+    website: '',
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -31,7 +37,7 @@ const Contact = () => {
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
-    
+
     // Name validation
     if (!formData.name.trim()) {
       newErrors.name = language === 'en' ? 'Name is required' : 'Name ist erforderlich';
@@ -60,7 +66,7 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -69,12 +75,18 @@ const Contact = () => {
     setSubmitStatus('idle');
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // In a real application, you would send the form data to your backend here
-      console.log('Form submitted:', formData);
-      
+      if (contactInfo.formEndpoint) {
+        const res = await fetch(contactInfo.formEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+        if (!res.ok) throw new Error('Failed to submit');
+      } else {
+        // Simulate API call if no endpoint configured
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        console.log('Form submitted (simulated):', formData);
+      }
       setSubmitStatus('success');
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
@@ -103,14 +115,14 @@ const Contact = () => {
   return (
     <>
       <Helmet>
-        <title>Contact | Milan Koncz</title>
+        <title>Contact | {siteMeta.title.split(' - ')[0]}</title>
         <meta name="description" content="Get in touch with Milan Koncz for web development projects, collaborations, or opportunities. Based in Mannheim, Germany." />
         <meta name="keywords" content="Contact Milan Koncz, Web Developer Contact, Mannheim, Germany, Collaboration" />
         <meta property="og:title" content="Contact | Milan Koncz" />
         <meta property="og:description" content="Get in touch with Milan Koncz for web development projects, collaborations, or opportunities. Based in Mannheim, Germany." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://milan-koncz.com/contact" />
-        <link rel="canonical" href="https://milan-koncz.com/contact" />
+        <meta property="og:url" content={`${siteMeta.baseUrl}/contact`} />
+        <link rel="canonical" href={`${siteMeta.baseUrl}/contact`} />
       </Helmet>
 
       <div className="container mx-auto px-4 py-16">
@@ -120,7 +132,7 @@ const Contact = () => {
             {t.contact.title}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300">
-            {t.contact.subtitle}
+            {c.subtitle || t.contact.subtitle}
           </p>
         </div>
 
@@ -138,11 +150,11 @@ const Contact = () => {
                       <Mail className="w-6 h-6 text-white" />
                     </div>
                     <a
-                      href="mailto:milan.koncz1@gmail.com"
+                      href={`mailto:${contactInfo.email}`}
                       className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                      aria-label="Send email to milan.koncz1@gmail.com"
+                      aria-label={`Send email to ${contactInfo.email}`}
                     >
-                      milan.koncz1@gmail.com
+                      {contactInfo.email}
                     </a>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -150,11 +162,11 @@ const Contact = () => {
                       <Phone className="w-6 h-6 text-white" />
                     </div>
                     <a
-                      href="tel:+491734151315"
+                      href={`tel:${contactInfo.phone}`}
                       className="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
-                      aria-label="Call +49 1734151315"
+                      aria-label={`Call ${contactInfo.phone}`}
                     >
-                      +49 1734151315
+                      {contactInfo.phone}
                     </a>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -162,7 +174,7 @@ const Contact = () => {
                       <MapPin className="w-6 h-6 text-white" />
                     </div>
                     <span className="text-gray-600 dark:text-gray-300">
-                      Mannheim, Germany
+                      {contactInfo.location}
                     </span>
                   </div>
                 </div>
@@ -175,7 +187,7 @@ const Contact = () => {
                 </h2>
                 <div className="flex space-x-4">
                   <a
-                    href="https://github.com"
+                    href={socialLinks.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
@@ -184,7 +196,7 @@ const Contact = () => {
                     <Github className="w-6 h-6 text-white" />
                   </a>
                   <a
-                    href="https://linkedin.com"
+                    href={socialLinks.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
@@ -193,13 +205,13 @@ const Contact = () => {
                     <Linkedin className="w-6 h-6 text-white" />
                   </a>
                   <a
-                    href="https://twitter.com"
+                    href={socialLinks.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-gradient-to-br from-sky-500 to-sky-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
-                    aria-label="Visit Twitter profile"
+                    className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+                    aria-label="Visit Instagram profile"
                   >
-                    <Twitter className="w-6 h-6 text-white" />
+                    <Instagram className="w-6 h-6 text-white" />
                   </a>
                 </div>
               </div>
@@ -211,6 +223,17 @@ const Contact = () => {
                 {t.contact.sendMessage}
               </h2>
               <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                {/* Honeypot field – hidden from users, visible to bots */}
+                <input
+                  type="text"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                  autoComplete="off"
+                  tabIndex={-1}
+                  className="hidden"
+                  aria-hidden="true"
+                />
                 <div>
                   <label
                     htmlFor="name"
@@ -227,9 +250,8 @@ const Contact = () => {
                     required
                     aria-invalid={!!errors.name}
                     aria-describedby={errors.name ? 'name-error' : undefined}
-                    className={`w-full px-4 py-2 border ${
-                      errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
-                    } rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors`}
+                    className={`w-full px-4 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors`}
                   />
                   {errors.name && (
                     <p id="name-error" className="mt-1 text-sm text-red-500">
@@ -253,9 +275,8 @@ const Contact = () => {
                     required
                     aria-invalid={!!errors.email}
                     aria-describedby={errors.email ? 'email-error' : undefined}
-                    className={`w-full px-4 py-2 border ${
-                      errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
-                    } rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors`}
+                    className={`w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors`}
                   />
                   {errors.email && (
                     <p id="email-error" className="mt-1 text-sm text-red-500">
@@ -279,9 +300,8 @@ const Contact = () => {
                     rows={4}
                     aria-invalid={!!errors.message}
                     aria-describedby={errors.message ? 'message-error' : undefined}
-                    className={`w-full px-4 py-2 border ${
-                      errors.message ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
-                    } rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors`}
+                    className={`w-full px-4 py-2 border ${errors.message ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors`}
                   />
                   {errors.message && (
                     <p id="message-error" className="mt-1 text-sm text-red-500">

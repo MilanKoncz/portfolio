@@ -8,6 +8,11 @@ interface LanguageContextType {
   toggleLanguage: () => void;
 }
 
+/**
+ * LanguageContext
+ * - Provides current language ('en' | 'de') and a toggle function
+ * - Translations object contains page strings used throughout the app
+ */
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const translations = {
@@ -82,63 +87,63 @@ export const translations = {
       home: 'Startseite',
       about: 'Über Mich',
       portfolio: 'Portfolio',
-      skills: 'Fähigkeiten',
+      skills: 'Skills',
       contact: 'Kontakt',
     },
     home: {
       title: "Hallo, ich bin Milan Koncz",
-      subtitle: "Full Stack Entwickler für moderne Web-Erlebnisse",
+      subtitle: "Full‑Stack‑Entwickler für moderne Web‑Erlebnisse",
       viewWork: "Meine Arbeit",
-      contactMe: "Kontakt",
+      contactMe: "Kontakt aufnehmen",
       features: {
         development: {
-          title: "Web-Entwicklung",
-          description: "Entwicklung moderner, responsiver Webanwendungen mit React, TypeScript und Node.js"
+          title: "Webentwicklung",
+          description: "Moderne, responsive Webanwendungen mit React, TypeScript und Node.js"
         },
         experience: {
-          title: "Berufserfahrung",
-          description: "Über 2 Jahre Erfahrung in Full-Stack-Entwicklung und Software-Engineering"
+          title: "Erfahrung",
+          description: "Über 2 Jahre Erfahrung in Full‑Stack‑Entwicklung und Software‑Engineering"
         },
         contact: {
           title: "Kontakt",
-          description: "Immer offen für neue Projekte, kreative Ideen oder Möglichkeiten"
+          description: "Offen für neue Projekte, Ideen und Möglichkeiten"
         }
       },
-      connect: "Verbinden Sie sich mit mir"
+      connect: "Vernetzen wir uns"
     },
     about: {
-      title: 'Über Mich',
-      subtitle: 'Lernen Sie mehr über meinen Werdegang, meine Erfahrungen und was mich antreibt',
+      title: 'Über mich',
+      subtitle: 'Mehr über meinen Werdegang, meine Erfahrungen und was mich antreibt',
       downloadCV: 'Lebenslauf herunterladen',
       myStory: 'Meine Geschichte',
-      story1: 'Ich bin ein leidenschaftlicher Entwickler und Student der Wirtschaftsinformatik an der Universität Mannheim, derzeit im zweiten Semester mit einem beeindruckenden Notendurchschnitt von 1,2. Meine Reise in der Technologie begann mit einer soliden Grundlage in Informatik während meines bilingualen Abiturs am Anno-Gymnasium Siegburg.',
-      story2: 'Als studentische Hilfskraft in der Universitäts-IT-Abteilung bin ich aktiv in der Full-Stack-Entwicklung und Softwareentwicklung tätig. Ich bin auch stolz darauf, Projektmanager bei Google Developer Groups on Campus und Kernmitglied bei Enactus Mannheim e.V. zu sein, wo ich zu nachhaltigen Tech-Initiativen beitrage.',
-      professionalJourney: 'Beruflicher Werdegang',
-      technicalSkills: 'Technische Fähigkeiten',
-      programming: 'Programmierung & Web-Entwicklung',
+      story1: 'Ich bin ein leidenschaftlicher Entwickler und studiere Wirtschaftsinformatik an der Universität Mannheim. Aktuell bin ich im dritten Semester (deutscher Notenschnitt: 1,6).',
+      story2: 'Ich arbeite als studentische Hilfskraft in der Universitäts‑IT, bin Head of IT bei Enactus Mannheim e.V. und Projektmanager bei den Google Developer Groups on Campus.',
+      professionalJourney: 'Werdegang',
+      technicalSkills: 'Technische Skills',
+      programming: 'Programmiersprachen',
       tools: 'Werkzeuge & Technologien',
       languages: 'Sprachen',
     },
     skills: {
-      title: 'Technische Fähigkeiten',
-      subtitle: 'Ein umfassender Überblick über meine technische Expertise und Fähigkeiten',
+      title: 'Skills',
+      subtitle: 'Ein Überblick über meine technischen Stärken',
       alwaysLearning: 'Immer am Lernen',
-      learningDesc: 'Ich erweitere ständig meine Fähigkeiten und bleibe auf dem neuesten Stand der Technologien und Best Practices in der Branche.',
+      learningDesc: 'Ich erweitere ständig meine Fähigkeiten und bleibe bei neuen Technologien am Ball.',
     },
     contact: {
       title: 'Kontakt',
-      subtitle: 'Haben Sie eine Frage oder möchten Sie zusammenarbeiten? Kontaktieren Sie mich!',
+      subtitle: 'Hast du eine Frage oder ein Projekt? Melde dich gern!',
       contactInfo: 'Kontaktinformationen',
-      connect: 'Verbinden Sie sich mit mir',
+      connect: 'Vernetze dich mit mir',
       sendMessage: 'Nachricht senden',
       name: 'Name',
-      email: 'E-Mail',
+      email: 'E‑Mail',
       message: 'Nachricht',
       send: 'Nachricht senden',
     },
     notFound: {
       title: 'Seite nicht gefunden',
-      description: 'Die gesuchte Seite wurde möglicherweise entfernt, umbenannt oder ist vorübergehend nicht verfügbar.',
+      description: 'Diese Seite wurde möglicherweise entfernt, umbenannt oder ist vorübergehend nicht erreichbar.',
       homeButton: 'Zur Startseite',
       backButton: 'Zurück'
     }

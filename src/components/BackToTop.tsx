@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 
+/**
+ * BackToTop shows a floating action button after scrolling down a bit
+ * and smoothly scrolls to the top when clicked.
+ */
 const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 

@@ -1,0 +1,55 @@
+/**
+ * Central content configuration for editable texts, with localization support.
+ *
+ * How it works:
+ * - Place your custom copy under the language key (`en` or `de`).
+ * - Components read `content[language]?.<section>.<key>` and fall back to
+ *   LanguageContext translations if a value is missing.
+ * - This lets you override per-language text without modifying components.
+ */
+
+export const content = {
+    en: {
+        home: {
+            title: "Hi, I'm Milan Koncz",
+            subtitle: 'Full Stack Developer crafting modern web experiences',
+        },
+        about: {
+            // Main bio paragraphs on the About page
+            story1:
+                "I'm a passionate developer and Business Informatics student at the University of Mannheim, currently in my third semester (German GPA: 1.6). My journey in technology began with a strong foundation in computer science during my bilingual Abitur at Anno-Gymnasium Siegburg.",
+            story2:
+                "As a student assistant at the University IT Department, I'm actively involved in full‑stack development and software projects. I'm also the Head of IT at Enactus Mannheim e.V. and serve as a Project Manager at Google Developer Groups on Campus, where I contribute to impactful and sustainable tech initiatives.",
+        },
+        skills: {
+            alwaysLearning: 'Always Learning',
+            learningDesc:
+                "I'm constantly expanding my skill set and staying up-to-date with the latest technologies and best practices in the industry.",
+        },
+        contact: {
+            subtitle: 'Have a question or want to work together? Feel free to reach out!',
+        },
+    },
+    de: {
+        home: {
+            title: 'Hallo, ich bin Milan Koncz',
+            subtitle: 'Full‑Stack‑Entwickler für moderne Web‑Erlebnisse',
+        },
+        about: {
+            story1:
+                'Ich bin ein leidenschaftlicher Entwickler und studiere Wirtschaftsinformatik an der Universität Mannheim. Aktuell bin ich im dritten Semester (deutscher Notenschnitt: 1,6). Meine Reise in die Tech‑Welt begann mit einer soliden Informatik‑Grundlage während meines bilingualen Abiturs am Anno‑Gymnasium Siegburg.',
+            story2:
+                'Als studentische Hilfskraft in der Universitäts‑IT arbeite ich aktiv in der Full‑Stack‑Entwicklung und an Software‑Projekten. Außerdem bin ich Head of IT bei Enactus Mannheim e.V. und Projektmanager bei den Google Developer Groups on Campus – mit Fokus auf wirkungsvolle und nachhaltige Tech‑Initiativen.',
+        },
+        skills: {
+            alwaysLearning: 'Immer am Lernen',
+            learningDesc:
+                'Ich erweitere ständig meine Fähigkeiten und bleibe auf dem neuesten Stand der Technologien und Best Practices in der Branche.',
+        },
+        contact: {
+            subtitle: 'Haben Sie eine Frage oder möchten Sie zusammenarbeiten? Kontaktieren Sie mich!',
+        },
+    },
+} as const;
+
+export type Content = typeof content;

@@ -1,52 +1,26 @@
 import { Helmet } from 'react-helmet';
 import { useLanguage, translations } from '../context/LanguageContext';
 import { Github, ExternalLink } from 'lucide-react';
+import { siteMeta } from '../config/site';
+import { projects } from '../config/projects';
 
 const Portfolio = () => {
   const { language } = useLanguage();
   const t = translations[language];
 
-  const projects = [
-    {
-      title: 'E-Commerce Platform',
-      description: 'A full-stack e-commerce platform built with React, Node.js, and MongoDB. Features include user authentication, product management, shopping cart, and payment integration.',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-      github: 'https://github.com',
-      live: 'https://example.com',
-      color: 'from-blue-500 to-blue-600'
-    },
-    {
-      title: 'Task Management App',
-      description: 'A collaborative task management application with real-time updates, team workspaces, and progress tracking. Built with React, TypeScript, and Firebase.',
-      image: 'https://images.unsplash.com/photo-1540350394557-8d14678e7f91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80',
-      technologies: ['React', 'TypeScript', 'Firebase', 'Tailwind CSS'],
-      github: 'https://github.com',
-      live: 'https://example.com',
-      color: 'from-purple-500 to-purple-600'
-    },
-    {
-      title: 'AI-Powered Chat Application',
-      description: 'A modern chat application with AI integration for automated responses and content moderation. Features include real-time messaging, file sharing, and user presence.',
-      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      technologies: ['Next.js', 'OpenAI', 'WebSocket', 'PostgreSQL'],
-      github: 'https://github.com',
-      live: 'https://example.com',
-      color: 'from-green-500 to-green-600'
-    }
-  ];
+  // projects are now read from src/config/projects.ts
 
   return (
     <>
       <Helmet>
-        <title>Portfolio | Milan Koncz</title>
+        <title>Portfolio | {siteMeta.title.split(' - ')[0]}</title>
         <meta name="description" content="Explore Milan Koncz's portfolio of web development projects, showcasing expertise in React, Node.js, and modern web technologies." />
         <meta name="keywords" content="Portfolio, Web Development Projects, React, Node.js, Full Stack Development" />
         <meta property="og:title" content="Portfolio | Milan Koncz" />
         <meta property="og:description" content="Explore Milan Koncz's portfolio of web development projects, showcasing expertise in React, Node.js, and modern web technologies." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://milan-koncz.com/portfolio" />
-        <link rel="canonical" href="https://milan-koncz.com/portfolio" />
+        <meta property="og:url" content={`${siteMeta.baseUrl}/portfolio`} />
+        <link rel="canonical" href={`${siteMeta.baseUrl}/portfolio`} />
       </Helmet>
 
       <div className="container mx-auto px-4 py-16">

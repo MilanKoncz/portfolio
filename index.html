@@ -1,36 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Milan Koncz's personal portfolio website showcasing web development projects and skills." />
-    <meta name="keywords" content="web development, portfolio, React, TypeScript, frontend developer" />
-    <meta name="author" content="Milan Koncz" />
-    
-    <!-- Open Graph / Social Media Meta Tags -->
-    <meta property="og:title" content="Milan Koncz - Portfolio" />
-    <meta property="og:description" content="Web developer portfolio showcasing projects and skills." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://milanconcz.com" />
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Milan Koncz - Portfolio" />
-    <meta name="twitter:description" content="Web developer portfolio showcasing projects and skills." />
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    
-    <title>Milan Koncz - Portfolio</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html> 
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/pwa-192x192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+  <link rel="apple-touch-icon" href="/pwa-192x192.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Milan Koncz's personal portfolio website showcasing web development projects and skills." />
+  <meta name="keywords" content="web development, portfolio, React, TypeScript, frontend developer" />
+  <meta name="author" content="Milan Koncz" />
+
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="Milan Koncz - Portfolio" />
+  <meta property="og:description" content="Web developer portfolio showcasing projects and skills." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://milanconcz.com" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Milan Koncz - Portfolio" />
+  <meta name="twitter:description" content="Web developer portfolio showcasing projects and skills." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <title>Milan Koncz - Portfolio</title>
+  <!-- Optional analytics: enable via config (see src/config/site.ts) -->
+  <script>
+    // This tiny inline script reads config compiled into bundle at runtime if exposed.
+    // For simplicity, you can include Plausible by adding an environment variable on Vercel
+    // or by manually enabling the below script tag and setting your domain.
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>

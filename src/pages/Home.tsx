@@ -1,12 +1,15 @@
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { useLanguage, translations } from '../context/LanguageContext';
-import { ArrowRight, Code, Briefcase, Mail, Github, Linkedin, Twitter } from 'lucide-react';
+import { ArrowRight, Code, Briefcase, Mail, Github, Linkedin, Instagram } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { content } from '../config/content';
+import { siteMeta, socialLinks } from '../config/site';
 
 const Home = () => {
   const { language } = useLanguage();
   const t = translations[language];
+  const c = content[language]?.home || {};
 
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
@@ -25,14 +28,14 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Milan Koncz | Full Stack Developer</title>
+        <title>{siteMeta.title}</title>
         <meta name="description" content="Full Stack Developer specializing in modern web technologies. Based in Mannheim, Germany." />
         <meta name="keywords" content="Full Stack Developer, Web Development, React, TypeScript, Node.js, Mannheim" />
         <meta property="og:title" content="Milan Koncz | Full Stack Developer" />
         <meta property="og:description" content="Full Stack Developer specializing in modern web technologies. Based in Mannheim, Germany." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://milan-koncz.com" />
-        <link rel="canonical" href="https://milan-koncz.com" />
+        <meta property="og:url" content={siteMeta.baseUrl} />
+        <link rel="canonical" href={siteMeta.baseUrl} />
       </Helmet>
 
       <div className="min-h-screen">
@@ -40,7 +43,7 @@ const Home = () => {
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
           {/* Animated background gradient */}
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-pink-900/20 animate-gradient" />
-          
+
           {/* Animated circles */}
           <div className="absolute inset-0">
             <motion.div
@@ -80,13 +83,13 @@ const Home = () => {
                 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6"
                 variants={fadeInUp}
               >
-                {t.home.title}
+                {c.title || t.home.title}
               </motion.h1>
               <motion.p
                 className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12"
                 variants={fadeInUp}
               >
-                {t.home.subtitle}
+                {c.subtitle || t.home.subtitle}
               </motion.p>
               <motion.div
                 className="flex flex-wrap justify-center gap-4"
@@ -110,7 +113,9 @@ const Home = () => {
             </motion.div>
           </div>
 
-          {/* Scroll indicator */}
+
+
+          {/* Scroll indicator
           <motion.div
             className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
             animate={{
@@ -135,7 +140,8 @@ const Home = () => {
                 }}
               />
             </div>
-          </motion.div>
+          </motion.div> */}
+
         </section>
 
         {/* Features Section */}
@@ -217,7 +223,7 @@ const Home = () => {
                 variants={fadeInUp}
               >
                 <a
-                  href="https://github.com"
+                  href={socialLinks.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
@@ -226,7 +232,7 @@ const Home = () => {
                   <Github className="w-6 h-6 text-gray-900 dark:text-white" />
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href={socialLinks.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
@@ -235,13 +241,13 @@ const Home = () => {
                   <Linkedin className="w-6 h-6 text-gray-900 dark:text-white" />
                 </a>
                 <a
-                  href="https://twitter.com"
+                  href={socialLinks.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                  aria-label="Twitter"
+                  aria-label="Instagram"
                 >
-                  <Twitter className="w-6 h-6 text-gray-900 dark:text-white" />
+                  <Instagram className="w-6 h-6 text-gray-900 dark:text-white" />
                 </a>
               </motion.div>
             </motion.div>

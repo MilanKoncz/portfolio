@@ -1,87 +1,66 @@
-# Welcome to React Router!
+## Portfolio (React + Vite + TypeScript + Tailwind)
 
-A modern, production-ready template for building full-stack React applications using React Router.
+This repository contains a single-page application (SPA) portfolio site. It uses React Router for client-side routing, Vite for bundling, TailwindCSS for styling, and a small PWA setup.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+Key highlights
+- Centralized config for content and navigation: see `src/config/`
+- Language toggle (English/German) with `LanguageContext`
+- Accessible, responsive layout with animated UI flourishes
+- Deployed on Vercel with SPA rewrites via `vercel.json`
 
-## Features
+Project structure
+- `src/`
+	- `main.tsx` bootstraps React and mounts `<App />`
+	- `App.tsx` defines the route map using `createBrowserRouter`
+	- `layout/Layout.tsx` renders the header, footer, nav, and `<Outlet />`
+	- `pages/` contains route components (Home, About, Portfolio, Skills, Contact, Pacman)
+	- `components/` reusable UI (LoadingBar, BackToTop, SkipToContent, PacmanIcon)
+	- `context/LanguageContext.tsx` language and translations
+	- `config/`
+		- `site.ts` global navigation, social/contact links, feature toggles, meta
+		- `content.ts` editable text content for sections
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+How it works
+1) Entry point `index.html` loads `src/main.tsx`
+2) `<App />` sets up routes and wraps everything in `LanguageProvider`
+3) `Layout` renders the navigation based on `config/site.ts` and shows children via `<Outlet />`
+4) Each page can read from `config/site.ts` and `config/content.ts` to display centralized content/links
 
-## Getting Started
+Edit content in one place
+- Navigation and feature toggles: `src/config/site.ts`
+- Page text content: `src/config/content.ts`
 
-### Installation
+Enable/disable pages in the header
+- In `src/config/site.ts`, flip the `enabled` flag for `navigation` items. Disabled pages are hidden from the header while routes remain available if you navigate directly.
 
-Install the dependencies:
-
-```bash
+Development
+```powershell
 npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
+Build
+```powershell
 npm run build
+npm run preview
 ```
 
-## Deployment
+Vercel deployment notes
+- `vercel.json` rewrites all non-file requests to `/index.html` for SPA routing.
+- Build command: `vite build`, output directory: `dist`.
 
-### Docker Deployment
+Additional ideas
+- Add analytics opt-in (e.g., Plausible) via a toggle in `site.ts`.
+- Extract projects list in Portfolio to `config/portfolio.ts` for easier editing.
+- Add a contact form backend (Vercel/Netlify function or third-party service) and point the form submit there.
 
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+SMTP email for the contact form
+- Backend lives at `api/contact.js` and uses Nodemailer over SMTP.
+- Configure these environment variables in Vercel Project Settings → Environment Variables (and locally in a `.env` file if you run with a Node adapter):
+	- `SMTP_HOST` (e.g., smtp.gmail.com or your provider)
+	- `SMTP_PORT` (465 for SSL or 587 for STARTTLS; default 587)
+	- `SMTP_USER` (SMTP username)
+	- `SMTP_PASS` (SMTP password or app-specific password)
+	- `MAIL_FROM` (optional, default uses SMTP_USER)
+	- `MAIL_TO` (optional, default sends to SMTP_USER)
+- The contact form posts to `/api/contact`. A honeypot `website` field is handled to reduce bot spam.

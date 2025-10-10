@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet';
 import { useLanguage, translations } from '../context/LanguageContext';
 import { Home, ArrowLeft } from 'lucide-react';
+import { siteMeta } from '../config/site';
 
 const NotFound = () => {
   const { language } = useLanguage();
@@ -9,7 +10,7 @@ const NotFound = () => {
   return (
     <>
       <Helmet>
-        <title>404 - Page Not Found | Milan Koncz</title>
+        <title>404 - Page Not Found | {siteMeta.title.split(' - ')[0]}</title>
         <meta name="description" content="The page you're looking for doesn't exist." />
       </Helmet>
 

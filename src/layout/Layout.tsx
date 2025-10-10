@@ -6,7 +6,15 @@ import LoadingBar from '../components/LoadingBar';
 import BackToTop from '../components/BackToTop';
 import SkipToContent from '../components/SkipToContent';
 import PacmanIcon from '../components/PacmanIcon';
+import { navigation, featureToggles } from '../config/site';
+import Analytics from '../components/Analytics';
 
+/**
+ * Layout component
+ * - Renders the app shell (header, footer, navigation)
+ * - Provides theme toggle (dark/light) and language toggle (en/de)
+ * - Uses centralized navigation config to show/hide links
+ */
 const Layout = () => {
   const { language, toggleLanguage } = useLanguage();
   const t = translations[language];
@@ -28,19 +36,32 @@ const Layout = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const navLinks = [
-    { path: '/', label: t.nav.home, hoverColor: 'hover:text-blue-500 dark:hover:text-blue-400' },
-    { path: '/about', label: t.nav.about, hoverColor: 'hover:text-green-500 dark:hover:text-green-400' },
-    { path: '/portfolio', label: t.nav.portfolio, hoverColor: 'hover:text-orange-500 dark:hover:text-orange-400' },
-    { path: '/skills', label: t.nav.skills, hoverColor: 'hover:text-purple-500 dark:hover:text-purple-400' },
-    { path: '/contact', label: t.nav.contact, hoverColor: 'hover:text-red-500 dark:hover:text-red-400' },
-  ];
+  // Map navigation config to localized labels and styles
+  const navLinks = navigation
+    .filter((item) => item.enabled)
+    .map((item) => {
+      const label = t.nav[item.key as keyof typeof t.nav];
+      const hoverMap: Record<string, string> = {
+        home: 'hover:text-blue-500 dark:hover:text-blue-400',
+        about: 'hover:text-green-500 dark:hover:text-green-400',
+        portfolio: 'hover:text-orange-500 dark:hover:text-orange-400',
+        skills: 'hover:text-purple-500 dark:hover:text-purple-400',
+        contact: 'hover:text-red-500 dark:hover:text-red-400',
+      };
+      return {
+        path: item.path,
+        label,
+        ariaLabel: item.ariaLabel ?? label,
+        hoverColor: hoverMap[item.key] ?? 'hover:text-blue-500 dark:hover:text-blue-400',
+      };
+    });
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
+      <Analytics />
       <SkipToContent />
       <LoadingBar />
-      
+
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-900 shadow-md z-50" role="banner">
         <div className="container mx-auto px-4">
@@ -61,11 +82,10 @@ const Layout = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`text-gray-600 dark:text-gray-300 transition-colors ${
-                    location.pathname === link.path
+                  className={`text-gray-600 dark:text-gray-300 transition-colors ${location.pathname === link.path
                       ? 'text-blue-600 dark:text-blue-400 font-semibold'
                       : link.hoverColor
-                  }`}
+                    }`}
                   aria-current={location.pathname === link.path ? 'page' : undefined}
                 >
                   {link.label}
@@ -121,11 +141,10 @@ const Layout = () => {
                   <Link
                     key={link.path}
                     to={link.path}
-                    className={`text-gray-600 dark:text-gray-300 transition-colors ${
-                      location.pathname === link.path
+                    className={`text-gray-600 dark:text-gray-300 transition-colors ${location.pathname === link.path
                         ? 'text-blue-600 dark:text-blue-400 font-semibold'
                         : link.hoverColor
-                    }`}
+                      }`}
                     onClick={toggleMenu}
                     aria-current={location.pathname === link.path ? 'page' : undefined}
                   >
@@ -167,7 +186,7 @@ const Layout = () => {
       <footer className="bg-gray-100 dark:bg-gray-800 py-8" role="contentinfo">
         <div className="container mx-auto px-4 relative">
           <div className="absolute left-4 top-1/2 -translate-y-1/2">
-            <PacmanIcon />
+            {featureToggles.showPacmanIcon && <PacmanIcon />}
           </div>
           <div className="text-center">
             <p className="text-gray-600 dark:text-gray-300">© 2025 Milan Koncz. All rights reserved.</p>

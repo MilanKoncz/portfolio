@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * Accessibility helper link that appears on Tab key press
+ * to allow keyboard users to skip directly to the main content.
+ */
 const SkipToContent = () => {
   const [isVisible, setIsVisible] = useState(false);
 

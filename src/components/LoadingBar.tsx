@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
+/**
+ * LoadingBar shows a slim progress bar at the top bound to scroll progress.
+ */
 const LoadingBar = () => {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {

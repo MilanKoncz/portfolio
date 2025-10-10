@@ -1,10 +1,13 @@
 import { Helmet } from 'react-helmet';
 import { useLanguage, translations } from '../context/LanguageContext';
 import { Code, Database, Server, Layout, Terminal, GitBranch, Shield, Zap } from 'lucide-react';
+import { content } from '../config/content';
+import { siteMeta } from '../config/site';
 
 const Skills = () => {
   const { language } = useLanguage();
   const t = translations[language];
+  const c = content[language]?.skills || {};
 
   const skillCategories = [
     {
@@ -12,65 +15,42 @@ const Skills = () => {
       icon: <Layout className="w-6 h-6" />,
       color: 'from-blue-500 to-blue-600',
       skills: [
-        { name: 'React', level: 90 },
-        { name: 'TypeScript', level: 85 },
-        { name: 'Tailwind CSS', level: 90 },
-        { name: 'HTML5/CSS3', level: 95 },
+        { name: 'React', level: 60 },
+        { name: 'TypeScript', level: 65 },
+        { name: 'Tailwind CSS', level: 70 },
+        { name: 'HTML5/CSS3', level: 80 },
       ],
     },
     {
-      title: 'Backend Development',
-      icon: <Server className="w-6 h-6" />,
-      color: 'from-purple-500 to-purple-600',
-      skills: [
-        { name: 'Node.js', level: 85 },
-        { name: 'Express', level: 80 },
-        { name: 'REST APIs', level: 90 },
-        { name: 'GraphQL', level: 75 },
-      ],
-    },
-    {
-      title: 'Database & Storage',
+      title: 'Databases',
       icon: <Database className="w-6 h-6" />,
       color: 'from-green-500 to-green-600',
       skills: [
-        { name: 'MongoDB', level: 85 },
-        { name: 'PostgreSQL', level: 80 },
-        { name: 'Redis', level: 75 },
-        { name: 'Firebase', level: 85 },
+        { name: 'MySQL', level: 75 },
+        { name: 'PostgreSQL', level: 75 },
+        { name: 'MongoDB', level: 70 },
+        { name: 'SQLite', level: 95 },
       ],
     },
     {
-      title: 'DevOps & Tools',
-      icon: <Terminal className="w-6 h-6" />,
-      color: 'from-orange-500 to-orange-600',
-      skills: [
-        { name: 'Git', level: 90 },
-        { name: 'Docker', level: 80 },
-        { name: 'CI/CD', level: 75 },
-        { name: 'AWS', level: 70 },
-      ],
-    },
-    {
-      title: 'Security & Performance',
-      icon: <Shield className="w-6 h-6" />,
-      color: 'from-red-500 to-red-600',
-      skills: [
-        { name: 'Web Security', level: 85 },
-        { name: 'Performance Optimization', level: 80 },
-        { name: 'Testing', level: 75 },
-        { name: 'Accessibility', level: 85 },
-      ],
-    },
-    {
-      title: 'Version Control & Collaboration',
+      title: 'Version Control',
       icon: <GitBranch className="w-6 h-6" />,
       color: 'from-indigo-500 to-indigo-600',
       skills: [
-        { name: 'GitHub', level: 90 },
+        { name: 'Git', level: 85 },
+        { name: 'GitHub', level: 85 },
         { name: 'GitLab', level: 85 },
-        { name: 'Code Review', level: 80 },
-        { name: 'Team Collaboration', level: 90 },
+      ],
+    },
+    {
+      title: 'Programming Languages',
+      icon: <Terminal className="w-6 h-6" />,
+      color: 'from-purple-500 to-purple-600',
+      skills: [
+        { name: 'Java', level: 95 },
+        { name: 'PHP', level: 70 },
+        { name: 'Python', level: 75 },
+        { name: 'JavaScript', level: 60 },
       ],
     },
   ];
@@ -78,14 +58,14 @@ const Skills = () => {
   return (
     <>
       <Helmet>
-        <title>Skills | Milan Koncz</title>
+        <title>Skills | {siteMeta.title.split(' - ')[0]}</title>
         <meta name="description" content="Explore Milan Koncz's technical skills and expertise in web development, including React, TypeScript, Node.js, and more." />
         <meta name="keywords" content="Technical Skills, Web Development, React, TypeScript, Node.js, Full Stack Development" />
         <meta property="og:title" content="Skills | Milan Koncz" />
         <meta property="og:description" content="Explore Milan Koncz's technical skills and expertise in web development, including React, TypeScript, Node.js, and more." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://milan-koncz.com/skills" />
-        <link rel="canonical" href="https://milan-koncz.com/skills" />
+        <meta property="og:url" content={`${siteMeta.baseUrl}/skills`} />
+        <link rel="canonical" href={`${siteMeta.baseUrl}/skills`} />
       </Helmet>
 
       <section className="py-16 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
@@ -99,11 +79,11 @@ const Skills = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             {skillCategories.map((category, index) => (
               <div
                 key={category.title}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 flex flex-col h-full"
               >
                 <div className={`p-6 bg-gradient-to-r ${category.color} text-white`}>
                   <div className="flex items-center space-x-3">
@@ -111,7 +91,7 @@ const Skills = () => {
                     <h3 className="text-xl font-semibold">{category.title}</h3>
                   </div>
                 </div>
-                <div className="p-6">
+                <div className="p-6 grow">
                   {category.skills.map((skill) => (
                     <div key={skill.name} className="mb-4">
                       <div className="flex justify-between mb-1">
@@ -134,11 +114,23 @@ const Skills = () => {
           <div className="mt-16 text-center">
             <div className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-300">
               <Zap className="w-5 h-5 text-yellow-500" />
-              <p>{t.skills.alwaysLearning}</p>
+              <p>{c.alwaysLearning || t.skills.alwaysLearning}</p>
             </div>
             <p className="mt-2 text-gray-500 dark:text-gray-400">
-              {t.skills.learningDesc}
+              {c.learningDesc || t.skills.learningDesc}
             </p>
+
+            {/* Badges */}
+            <div className="mt-6 flex flex-wrap justify-center gap-2">
+              {['React', 'TypeScript', 'Tailwind', 'Java', 'PHP', 'Python', 'JavaScript', 'MySQL', 'PostgreSQL', 'MongoDB', 'Git', 'GitHub', 'GitLab'].map((badge) => (
+                <span
+                  key={badge}
+                  className="px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                >
+                  {badge}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>

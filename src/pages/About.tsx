@@ -2,22 +2,25 @@ import { Helmet } from 'react-helmet';
 import { Code2, Briefcase, GraduationCap, Download } from 'lucide-react';
 import { useLanguage, translations } from '../context/LanguageContext';
 import CV from '../assets/pdf/CVMilanKoncz.pdf';
+import { content } from '../config/content';
+import { siteMeta, documents } from '../config/site';
 
 const About = () => {
   const { language } = useLanguage();
   const t = translations[language];
+  const c = content[language]?.about || {};
 
   return (
     <>
       <Helmet>
-        <title>About Me | Milan Koncz</title>
+        <title>About Me | {siteMeta.title.split(' - ')[0]}</title>
         <meta name="description" content="Learn more about Milan Koncz, a Full Stack Developer and Business Informatics student at the University of Mannheim. View my professional journey and technical skills." />
         <meta name="keywords" content="About Milan Koncz, Full Stack Developer, Business Informatics, University of Mannheim, Technical Skills" />
         <meta property="og:title" content="About Me | Milan Koncz" />
         <meta property="og:description" content="Learn more about Milan Koncz, a Full Stack Developer and Business Informatics student at the University of Mannheim. View my professional journey and technical skills." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://milan-koncz.com/about" />
-        <link rel="canonical" href="https://milan-koncz.com/about" />
+        <meta property="og:url" content={`${siteMeta.baseUrl}/about`} />
+        <link rel="canonical" href={`${siteMeta.baseUrl}/about`} />
       </Helmet>
 
       <div className="container mx-auto px-4 py-16">
@@ -30,7 +33,7 @@ const About = () => {
             {t.about.subtitle}
           </p>
           <a
-            href={CV}
+            href={documents.cvUrl || CV}
             download="CVMilanKoncz.pdf"
             className="inline-flex items-center mt-6 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
           >
@@ -46,8 +49,8 @@ const About = () => {
               {t.about.myStory}
             </h2>
             <div className="space-y-4 text-gray-600 dark:text-gray-300">
-              <p>{t.about.story1}</p>
-              <p>{t.about.story2}</p>
+              <p>{c.story1 || t.about.story1}</p>
+              <p>{c.story2 || t.about.story2}</p>
             </div>
           </div>
 
@@ -79,7 +82,20 @@ const About = () => {
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 mb-2">09.2024 - Present</p>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Current semester: 2nd, GPA: 1.2
+                  Current semester: 3rd, German GPA: 1.6
+                </p>
+              </div>
+
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border-l-4 border-green-500">
+                <div className="flex items-center mb-4">
+                  <Code2 className="w-6 h-6 text-green-500 mr-3" />
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    Head of IT — Enactus Mannheim e.V.
+                  </h3>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 mb-2">2025 - Present</p>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Leading IT initiatives and supporting project teams with modern web solutions.
                 </p>
               </div>
             </div>
@@ -132,6 +148,7 @@ const About = () => {
                 <li className="text-gray-600 dark:text-gray-300">Hungarian - Native</li>
                 <li className="text-gray-600 dark:text-gray-300">English - C1</li>
                 <li className="text-gray-600 dark:text-gray-300">Latin - Latinum</li>
+                <li className="text-gray-600 dark:text-gray-300">Korean - A2</li>
               </ul>
             </div>
           </div>

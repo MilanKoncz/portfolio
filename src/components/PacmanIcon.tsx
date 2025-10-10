@@ -2,6 +2,10 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import pacmanIcon from '../assets/icons/pacman.svg';
 
+/**
+ * PacmanIcon is a small easter-egg link to the /pacman route.
+ * Visibility is controlled via featureToggles.showPacmanIcon in config.
+ */
 const PacmanIcon = () => {
   return (
     <Link
@@ -19,16 +23,16 @@ const PacmanIcon = () => {
         className="relative"
       >
         {/* Gray version */}
-        <img 
-          src={pacmanIcon} 
+        <img
+          src={pacmanIcon}
           alt="Pacman"
-          className="w-6 h-6 [filter:brightness(0)_invert(0.7)] dark:[filter:brightness(0)_invert(0.5)]" 
+          className="w-6 h-6 [filter:brightness(0)_invert(0.7)] dark:[filter:brightness(0)_invert(0.5)]"
         />
         {/* Yellow version */}
-        <img 
-          src={pacmanIcon} 
+        <img
+          src={pacmanIcon}
           alt="Pacman"
-          className="w-6 h-6 absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 [filter:brightness(0)_invert(1)_sepia(1)_saturate(10000%)_hue-rotate(0deg)_brightness(1.2)]" 
+          className="w-6 h-6 absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 [filter:brightness(0)_invert(1)_sepia(1)_saturate(10000%)_hue-rotate(0deg)_brightness(1.2)]"
         />
       </motion.div>
     </Link>
