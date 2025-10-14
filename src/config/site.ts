@@ -47,7 +47,8 @@ export const contact = {
 };
 
 export const documents = {
-    cvUrl: '/src/assets/pdf/CVMilanKoncz.pdf',
+    // Use a publicly served path. Place CVMilanKoncz.pdf in /public root so it is served without hashing.
+    cvUrl: '/CVMilanKoncz.pdf',
 };
 
 export const featureToggles = {
