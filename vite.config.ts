@@ -18,6 +18,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: null,
       includeAssets: ['favicon.ico', 'robots.txt', 'pwa-192x192.png', 'pwa-512x512.png'],
       manifest: {
         name: 'Milan Koncz - Portfolio',
@@ -36,6 +37,10 @@ export default defineConfig({
             type: 'image/png',
           },
         ],
+      },
+      workbox: {
+        skipWaiting: true,
+        clientsClaim: true,
       },
     }),
     compression({
