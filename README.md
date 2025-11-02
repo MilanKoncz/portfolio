@@ -54,6 +54,12 @@ Additional ideas
 - Extract projects list in Portfolio to `config/portfolio.ts` for easier editing.
 - Add a contact form backend (Vercel/Netlify function or third-party service) and point the form submit there.
 
+Sicherer CV-Download (Hinweise)
+- Lege die PDF unter `public/` ab (z. B. `/CVMilanKoncz.pdf`). Vite/Vercel liefern diese Datei unverändert, mit korrektem MIME-Type.
+- Verlinke in der App mit einem stabilen Pfad (siehe `documents.cvUrl` in `src/config/site.ts`). Kein Import aus `src/assets` nötig.
+- Bei False-Positives von Virenscannern: Datei neu exportieren (ohne eingebettete Skripte/Metadaten), ggf. umbenennen und Signatur/Zeitstempel entfernen.
+- Alternativ extern hosten (z. B. GitHub Releases, Google Drive mit Direct-Link) und `documents.cvUrl` entsprechend setzen.
+
 SMTP email for the contact form
 - Backend lives at `api/contact.js` and uses Nodemailer over SMTP.
 - Configure these environment variables in Vercel Project Settings → Environment Variables (and locally in a `.env` file if you run with a Node adapter):

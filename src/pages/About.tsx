@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { Code2, Briefcase, GraduationCap, Download } from 'lucide-react';
 import { useLanguage, translations } from '../context/LanguageContext';
-import CV from '../assets/pdf/CVMilanKoncz.pdf';
 import { content } from '../config/content';
 import { siteMeta, documents } from '../config/site';
 
@@ -33,7 +32,7 @@ const About = () => {
             {t.about.subtitle}
           </p>
           <a
-            href={documents.cvUrl || CV}
+            href={documents.cvUrl}
             download="CVMilanKoncz.pdf"
             className="inline-flex items-center mt-6 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
           >

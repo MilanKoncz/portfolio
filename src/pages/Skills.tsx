@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { useLanguage, translations } from '../context/LanguageContext';
-import { Code, Database, Server, Layout, Terminal, GitBranch, Shield, Zap } from 'lucide-react';
+import { Database, Layout, Terminal, GitBranch, Zap } from 'lucide-react';
 import { content } from '../config/content';
 import { siteMeta } from '../config/site';
 
@@ -80,7 +80,7 @@ const Skills = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
-            {skillCategories.map((category, index) => (
+            {skillCategories.map((category) => (
               <div
                 key={category.title}
                 className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 flex flex-col h-full"

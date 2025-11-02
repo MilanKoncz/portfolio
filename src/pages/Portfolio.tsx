@@ -1,12 +1,11 @@
 import { Helmet } from 'react-helmet';
-import { useLanguage, translations } from '../context/LanguageContext';
+import { useLanguage } from '../context/LanguageContext';
 import { Github, ExternalLink } from 'lucide-react';
 import { siteMeta } from '../config/site';
 import { projects } from '../config/projects';
 
 const Portfolio = () => {
-  const { language } = useLanguage();
-  const t = translations[language];
+  useLanguage();
 
   // projects are now read from src/config/projects.ts
 
@@ -34,7 +33,7 @@ const Portfolio = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <div
               key={project.title}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"

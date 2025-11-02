@@ -1,10 +1,9 @@
 import { Helmet } from 'react-helmet';
-import { useLanguage, translations } from '../context/LanguageContext';
+import { useLanguage } from '../context/LanguageContext';
 import { siteMeta } from '../config/site';
 
 const Pacman = () => {
-  const { language } = useLanguage();
-  const t = translations[language];
+  useLanguage();
 
   return (
     <>

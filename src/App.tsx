@@ -1,16 +1,18 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
+import ErrorBoundary from './components/ErrorBoundary';
+import { lazyImportWithRetry } from './utils/lazyWithRetry';
 import { LanguageProvider } from './context/LanguageContext';
 import Layout from './layout/Layout';
 import Pacman from './pages/Pacman';
 
 // Lazy load pages
-const Home = lazy(() => import('./pages/Home'));
-const About = lazy(() => import('./pages/About'));
-const Portfolio = lazy(() => import('./pages/Portfolio'));
-const Skills = lazy(() => import('./pages/Skills'));
-const Contact = lazy(() => import('./pages/Contact'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+const Home = lazy(lazyImportWithRetry(() => import('./pages/Home')));
+const About = lazy(lazyImportWithRetry(() => import('./pages/About')));
+const Portfolio = lazy(lazyImportWithRetry(() => import('./pages/Portfolio')));
+const Skills = lazy(lazyImportWithRetry(() => import('./pages/Skills')));
+const Contact = lazy(lazyImportWithRetry(() => import('./pages/Contact')));
+const NotFound = lazy(lazyImportWithRetry(() => import('./pages/NotFound')));
 
 // Loading component
 const Loading = () => (
@@ -91,7 +93,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <LanguageProvider>
-      <RouterProvider router={router} />
+      <ErrorBoundary>
+        <RouterProvider router={router} />
+      </ErrorBoundary>
     </LanguageProvider>
   );
 }

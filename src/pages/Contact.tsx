@@ -85,7 +85,7 @@ const Contact = () => {
       } else {
         // Simulate API call if no endpoint configured
         await new Promise(resolve => setTimeout(resolve, 1500));
-        console.log('Form submitted (simulated):', formData);
+        /* Simuliertes Logging der Formdaten (bewusst ohne console, um Linting sauber zu halten) */
       }
       setSubmitStatus('success');
       setFormData({ name: '', email: '', message: '' });

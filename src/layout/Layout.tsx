@@ -8,6 +8,7 @@ import SkipToContent from '../components/SkipToContent';
 import PacmanIcon from '../components/PacmanIcon';
 import { navigation, featureToggles } from '../config/site';
 import Analytics from '../components/Analytics';
+import PwaUpdater from '../components/PwaUpdater';
 
 /**
  * Layout component
@@ -59,6 +60,7 @@ const Layout = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       <Analytics />
+      <PwaUpdater />
       <SkipToContent />
       <LoadingBar />
 
@@ -83,8 +85,8 @@ const Layout = () => {
                   key={link.path}
                   to={link.path}
                   className={`text-gray-600 dark:text-gray-300 transition-colors ${location.pathname === link.path
-                      ? 'text-blue-600 dark:text-blue-400 font-semibold'
-                      : link.hoverColor
+                    ? 'text-blue-600 dark:text-blue-400 font-semibold'
+                    : link.hoverColor
                     }`}
                   aria-current={location.pathname === link.path ? 'page' : undefined}
                 >
@@ -142,8 +144,8 @@ const Layout = () => {
                     key={link.path}
                     to={link.path}
                     className={`text-gray-600 dark:text-gray-300 transition-colors ${location.pathname === link.path
-                        ? 'text-blue-600 dark:text-blue-400 font-semibold'
-                        : link.hoverColor
+                      ? 'text-blue-600 dark:text-blue-400 font-semibold'
+                      : link.hoverColor
                       }`}
                     onClick={toggleMenu}
                     aria-current={location.pathname === link.path ? 'page' : undefined}

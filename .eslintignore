@@ -1,0 +1,7 @@
+dist/
+node_modules/
+*.config.*
+vite.config.ts
+vercel.config.mjs
+scripts/
+public/
