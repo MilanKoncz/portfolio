@@ -11,6 +11,14 @@ const Home = () => {
   const t = translations[language];
   const c = content[language]?.home || {};
 
+  // SEO: localized title/description for better SERP snippets
+  const seoTitle = language === 'de'
+    ? 'Milan Koncz | Full‑Stack Webentwickler (React, TypeScript)'
+    : 'Milan Koncz | Full‑Stack Web Developer (React, TypeScript)';
+  const seoDescription = language === 'de'
+    ? 'Portfolio von Milan Koncz, Full‑Stack Webentwickler aus Mannheim. Moderne, performante Webapps mit React, TypeScript und Node.js. Projekte, Skills und Kontakt.'
+    : "Portfolio of Milan Koncz, a full‑stack web developer based in Mannheim. Modern, performant web apps with React, TypeScript and Node.js. Projects, skills and contact.";
+
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -28,14 +36,27 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>{siteMeta.title}</title>
-        <meta name="description" content="Full Stack Developer specializing in modern web technologies. Based in Mannheim, Germany." />
-        <meta name="keywords" content="Full Stack Developer, Web Development, React, TypeScript, Node.js, Mannheim" />
-        <meta property="og:title" content="Milan Koncz | Full Stack Developer" />
-        <meta property="og:description" content="Full Stack Developer specializing in modern web technologies. Based in Mannheim, Germany." />
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription} />
+        <meta name="keywords" content={language === 'de' ? 'Webentwickler, Full-Stack, React, TypeScript, Node.js, Mannheim, Portfolio' : 'Web Developer, Full-Stack, React, TypeScript, Node.js, Mannheim, Portfolio'} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={siteMeta.baseUrl} />
+        <meta property="og:image" content="/pwa-512x512.png" />
         <link rel="canonical" href={siteMeta.baseUrl} />
+        {/* Structured data for Person */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            name: 'Milan Koncz',
+            url: siteMeta.baseUrl,
+            jobTitle: language === 'de' ? 'Full‑Stack Webentwickler' : 'Full‑Stack Web Developer',
+            image: `${siteMeta.baseUrl}/pwa-512x512.png`,
+            sameAs: [socialLinks.github, socialLinks.linkedin, socialLinks.instagram].filter(Boolean),
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen">
