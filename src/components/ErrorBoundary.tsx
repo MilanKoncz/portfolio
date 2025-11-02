@@ -43,20 +43,30 @@ export default class ErrorBoundary extends React.Component<Props, State> {
         // A minimal approach is a soft reload via history.replaceState then location.reload
         // But we first try a cache-busting reload
         if (typeof window !== 'undefined') {
-            (window as any).location?.reload?.();
+            const now = Date.now();
+            const last = Number(sessionStorage.getItem('last-reload-ts') || '0');
+            if (!last || now - last > 5000) {
+                sessionStorage.setItem('last-reload-ts', String(now));
+                (window as any).location?.reload?.();
+            }
         }
     };
 
     handleHardRefresh = () => {
         if (typeof window !== 'undefined') {
             if ('caches' in window) {
+                const now = Date.now();
+                const last = Number(sessionStorage.getItem('last-reload-ts') || '0');
+                if (last && now - last <= 5000) return;
                 caches
                     .keys()
                     .then((keys) => keys.forEach((k) => caches.delete(k)))
                     .finally(() => {
+                        sessionStorage.setItem('last-reload-ts', String(Date.now()));
                         (window as any).location?.reload?.();
                     });
             } else {
+                sessionStorage.setItem('last-reload-ts', String(Date.now()));
                 (window as any).location?.reload?.();
             }
         }

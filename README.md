@@ -70,3 +70,9 @@ SMTP email for the contact form
 	- `MAIL_FROM` (optional, default uses SMTP_USER)
 	- `MAIL_TO` (optional, default sends to SMTP_USER)
 - The contact form posts to `/api/contact`. A honeypot `website` field is handled to reduce bot spam.
+
+PWA Update-Verhalten
+- Steuerbar via `featureToggles.pwaUpdateMode` in `src/config/site.ts`:
+	- `manual` (Standard): Zeigt einen Hinweis mit Button „Aktualisieren“.
+	- `auto`: Aktualisiert automatisch, sobald eine neue Version verfügbar ist.
+	- Beide Modi sind gegen Reload-Schleifen abgesichert (Session-Guards).

@@ -54,6 +54,8 @@ export const documents = {
 export const featureToggles = {
     /** Show the Pacman easter-egg icon in the footer */
     showPacmanIcon: true,
+    /** PWA update behavior: 'manual' (banner + button) or 'auto' (update immediately). */
+    pwaUpdateMode: 'manual' as 'manual' | 'auto',
 };
 
 export const analytics = {
