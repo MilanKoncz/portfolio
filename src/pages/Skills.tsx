@@ -61,6 +61,7 @@ const Skills = () => {
         <title>Skills | {siteMeta.title.split(' - ')[0]}</title>
         <meta name="description" content="Explore Milan Koncz's technical skills and expertise in web development, including React, TypeScript, Node.js, and more." />
         <meta name="keywords" content="Technical Skills, Web Development, React, TypeScript, Node.js, Full Stack Development" />
+        <meta name="robots" content="noindex,follow" />
         <meta property="og:title" content="Skills | Milan Koncz" />
         <meta property="og:description" content="Explore Milan Koncz's technical skills and expertise in web development, including React, TypeScript, Node.js, and more." />
         <meta property="og:type" content="website" />

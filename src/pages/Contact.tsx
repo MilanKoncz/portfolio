@@ -118,6 +118,7 @@ const Contact = () => {
         <title>Contact | {siteMeta.title.split(' - ')[0]}</title>
         <meta name="description" content="Get in touch with Milan Koncz for web development projects, collaborations, or opportunities. Based in Mannheim, Germany." />
         <meta name="keywords" content="Contact Milan Koncz, Web Developer Contact, Mannheim, Germany, Collaboration" />
+        <meta name="robots" content="noindex,follow" />
         <meta property="og:title" content="Contact | Milan Koncz" />
         <meta property="og:description" content="Get in touch with Milan Koncz for web development projects, collaborations, or opportunities. Based in Mannheim, Germany." />
         <meta property="og:type" content="website" />

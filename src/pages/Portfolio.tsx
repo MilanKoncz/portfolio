@@ -15,6 +15,7 @@ const Portfolio = () => {
         <title>Portfolio | {siteMeta.title.split(' - ')[0]}</title>
         <meta name="description" content="Explore Milan Koncz's portfolio of web development projects, showcasing expertise in React, Node.js, and modern web technologies." />
         <meta name="keywords" content="Portfolio, Web Development Projects, React, Node.js, Full Stack Development" />
+        <meta name="robots" content="noindex,follow" />
         <meta property="og:title" content="Portfolio | Milan Koncz" />
         <meta property="og:description" content="Explore Milan Koncz's portfolio of web development projects, showcasing expertise in React, Node.js, and modern web technologies." />
         <meta property="og:type" content="website" />

@@ -76,3 +76,64 @@ PWA Update-Verhalten
 	- `manual` (Standard): Zeigt einen Hinweis mit Button „Aktualisieren“.
 	- `auto`: Aktualisiert automatisch, sobald eine neue Version verfügbar ist.
 	- Beide Modi sind gegen Reload-Schleifen abgesichert (Session-Guards).
+
+Suchmaschinen & Indexierung
+
+Google (Search Console)
+- Du musst nichts „manuell“ indexieren – Google findet dich über Links und/oder Besuch deiner Domain.
+- Optional: In der Google Search Console (Property anlegen) kannst du deine Startseite oder `sitemap.xml` manuell crawlen lassen (URL-Prüfung → Indexierung anfordern). Das beschleunigt erste Aufnahme.
+
+Bing Webmaster Tools
+1. Property hinzufügen (URL eingeben) und verifizieren (am einfachsten per DNS TXT oder CNAME; alternativ HTML-Datei oder Meta-Tag).
+2. `https://milankoncz.me/sitemap.xml` einreichen (Menü: Sitemaps). Unsere Sitemap enthält nur die Root-URL, damit nur Home indexiert wird.
+3. „URL Submission“ / „Indexierung anfordern“ nutzen für schnellere Aufnahme bei großen Änderungen.
+
+DuckDuckGo
+- Nutzt vorrangig Bing-Index + eigene Quellen. Sobald du bei Bing erscheinst, tauchst du meist zeitnah bei DuckDuckGo auf. Keine eigene Konsole nötig.
+
+Was heißt „Sitemap einreichen“?
+- In einem Webmaster Tool (Google Search Console oder Bing) fügst du die URL zur Sitemap hinzu. Das hilft dem Crawler zu verstehen, welche Seiten du priorisierst. Da deine Sitemap nur `/` enthält, verstärkst du das Signal: „Nur Startseite indexieren“.
+
+`noindex` Umsetzung
+- Alle Unterseiten (About, Skills, Contact, Portfolio) besitzen `<meta name="robots" content="noindex,follow">`, sodass sie nicht im Index landen, aber interne Links weitergegeben werden.
+
+Social Banner (Open Graph / Twitter Card)
+- Ein Social Banner ist ein breites Bild (idealerweise 1200x630 px, PNG oder JPEG) das beim Teilen deiner URL auf Plattformen (Slack, LinkedIn, Twitter, Facebook) angezeigt wird.
+- Erstelle z.B. `public/og-banner.png` mit Titel + kurzer Tagline.
+- Dann in `index.html` und/oder `Home.tsx` die Tags ersetzen:
+  - `og:image` → `/og-banner.png`
+  - `twitter:image` → `/og-banner.png`
+  - Beibehalten von `summary_large_image` für großformatige Darstellung.
+
+IndexNow (schnelle Aktualisierungs-Pings für Bing & andere)
+- IndexNow ist ein Protokoll, mit dem du Suchmaschinen aktiv anstupst, wenn Inhalte sich ändern.
+- Implementierung in diesem Repo: `/api/indexnow.js` (Vercel Function)
+	- Env Variablen in Vercel setzen:
+		- `SITE_BASE_URL` = `https://milankoncz.me`
+		- `INDEXNOW_KEY` = z. B. `3f2c7d8e2a1b4c5d6e7f8a9b0c`
+	- Lege die Key-Datei unter `public/indexnow-key-<INDEXNOW_KEY>.txt` an (bereits vorhanden) – Inhalt ist nur der Key selbst.
+	- Nutzung: `POST https://milankoncz.me/api/indexnow` mit Body `{ "urls": ["https://milankoncz.me/"] }`. Ohne Body pingt die Startseite.
+	- Sicherheit: Es werden nur URLs akzeptiert, die mit `SITE_BASE_URL` beginnen.
+	- Referenz: https://www.indexnow.org/documentation
+
+Optional: Automatisch nach Deploy pingen
+- Du kannst in Vercel ein deploy hook oder nach-Build Schritt konfigurieren, der `POST /api/indexnow` ohne Body ausführt, sodass die Startseite nach jedem Release gemeldet wird.
+
+Hinweis bei Key-Änderung (IndexNow)
+- Wenn du später den IndexNow-Key änderst, müssen IMMER zwei Dinge synchron angepasst werden:
+	1) Die Datei unter `public/indexnow-key-<KEY>.txt` (Dateiname + Dateiinhalt = neuer Key)
+	2) Die Vercel Environment Variable `INDEXNOW_KEY`
+- Danach neu deployen, damit beides live ist und die Pings wieder akzeptiert werden.
+
+Favicon / Icon Best Practices
+- `favicon.ico` liegt im Root und wird von älteren Browsern/Clients verwendet.
+- Zusätzlich ein eigens skaliertes PNG `favicon-32-32.png` für gestochen scharfes SERP/Sharing Icon.
+- Weitere Größen (48x48, 192x192, 512x512) decken PWA + hochauflösende Geräte ab.
+- Wenn Google dein Icon nicht sofort zeigt: Warten (Caching), oder in Search Console „Seite erneut crawlen“ anfordern.
+
+Zusammenfassung der SEO-Signale
+- Sitemap nur mit `/` → Fokus auf Startseite.
+- `noindex,follow` auf Unterseiten.
+- Vollständige OG/Twitter Meta + strukturierte Daten (Person, WebSite) in `Home.tsx`.
+- Saubere Favicons (ICO + PNG 32x32 + PWA Icons).
+- Optional: Social Banner hinzufügen für bessere Teil-Vorschau.

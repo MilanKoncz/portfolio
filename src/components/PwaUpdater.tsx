@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { featureToggles } from '../config/site';
 
@@ -30,7 +30,7 @@ export default function PwaUpdater() {
         }
     }, []);
 
-    const handleUpdate = async () => {
+    const handleUpdate = useCallback(async () => {
         if (updatingRef.current) return;
         updatingRef.current = true;
         try {
@@ -50,14 +50,14 @@ export default function PwaUpdater() {
         } finally {
             updatingRef.current = false;
         }
-    };
+    }, [updateServiceWorker]);
 
     // Auto-Update-Modus: direkt aktualisieren, aber mit Session-Guard (kein Loop)
     useEffect(() => {
         if (featureToggles.pwaUpdateMode === 'auto' && needRefresh && !suppress) {
             void handleUpdate();
         }
-    }, [needRefresh, suppress]);
+    }, [handleUpdate, needRefresh, suppress]);
 
     if (!needRefresh || suppress || featureToggles.pwaUpdateMode === 'auto') return null;
 

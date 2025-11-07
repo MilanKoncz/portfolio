@@ -39,11 +39,17 @@ const Home = () => {
         <title>{seoTitle}</title>
         <meta name="description" content={seoDescription} />
         <meta name="keywords" content={language === 'de' ? 'Webentwickler, Full-Stack, React, TypeScript, Node.js, Mannheim, Portfolio' : 'Web Developer, Full-Stack, React, TypeScript, Node.js, Mannheim, Portfolio'} />
+        <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
         <meta property="og:title" content={seoTitle} />
         <meta property="og:description" content={seoDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={siteMeta.baseUrl} />
-        <meta property="og:image" content="/pwa-512x512.png" />
+        <meta property="og:image" content={`${siteMeta.baseUrl}/pwa-512x512.png`} />
+        <meta property="og:image:alt" content="Milan Koncz Portfolio" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seoTitle} />
+        <meta name="twitter:description" content={seoDescription} />
+        <meta name="twitter:image" content={`${siteMeta.baseUrl}/pwa-512x512.png`} />
         <link rel="canonical" href={siteMeta.baseUrl} />
         {/* Structured data for Person */}
         <script type="application/ld+json">
@@ -55,6 +61,17 @@ const Home = () => {
             jobTitle: language === 'de' ? 'Full‑Stack Webentwickler' : 'Full‑Stack Web Developer',
             image: `${siteMeta.baseUrl}/pwa-512x512.png`,
             sameAs: [socialLinks.github, socialLinks.linkedin, socialLinks.instagram].filter(Boolean),
+          })}
+        </script>
+        {/* Structured data for WebSite */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'Milan Koncz - Portfolio',
+            url: siteMeta.baseUrl,
+            inLanguage: language,
+            description: seoDescription,
           })}
         </script>
       </Helmet>
@@ -103,6 +120,7 @@ const Home = () => {
               <motion.h1
                 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6"
                 variants={fadeInUp}
+                data-nosnippet
               >
                 {c.title || t.home.title}
               </motion.h1>

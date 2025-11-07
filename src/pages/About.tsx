@@ -15,6 +15,7 @@ const About = () => {
         <title>About Me | {siteMeta.title.split(' - ')[0]}</title>
         <meta name="description" content="Learn more about Milan Koncz, a Full Stack Developer and Business Informatics student at the University of Mannheim. View my professional journey and technical skills." />
         <meta name="keywords" content="About Milan Koncz, Full Stack Developer, Business Informatics, University of Mannheim, Technical Skills" />
+        <meta name="robots" content="noindex,follow" />
         <meta property="og:title" content="About Me | Milan Koncz" />
         <meta property="og:description" content="Learn more about Milan Koncz, a Full Stack Developer and Business Informatics student at the University of Mannheim. View my professional journey and technical skills." />
         <meta property="og:type" content="website" />
