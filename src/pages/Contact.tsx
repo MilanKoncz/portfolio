@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Mail, Phone, MapPin, Github, Linkedin, Instagram, Loader2 } from 'lucide-react';
 import { useLanguage, translations } from '../context/LanguageContext';
-import { siteMeta, socialLinks, contact as contactInfo } from '../config/site';
+import { siteMeta, socialLinks, contact as contactInfo, captcha } from '../config/site';
 import { content } from '../config/content';
 
 interface FormData {
@@ -11,12 +11,23 @@ interface FormData {
   message: string;
   // Honeypot: should stay empty; bots often fill every field
   website?: string;
+  cfTurnstileToken?: string;
 }
 
 interface FormErrors {
   name?: string;
   email?: string;
   message?: string;
+  captcha?: string;
+}
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: HTMLElement | string, options: Record<string, any>) => string;
+      reset?: (widgetId?: string) => void;
+    };
+  }
 }
 
 const Contact = () => {
@@ -29,11 +40,64 @@ const Contact = () => {
     email: '',
     message: '',
     website: '',
+    cfTurnstileToken: '',
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const turnstileContainerRef = useRef<HTMLDivElement | null>(null);
+  const [turnstileId, setTurnstileId] = useState<string | null>(null);
+
+  // Load and render Cloudflare Turnstile if configured
+  useEffect(() => {
+    if (!(captcha.provider === 'turnstile' && captcha.siteKey)) return;
+    let scriptEl = document.querySelector('script[data-cf-turnstile]') as HTMLScriptElement | null;
+    const renderWidget = () => {
+      if (!turnstileContainerRef.current || !window.turnstile) return;
+      // Avoid duplicate render
+      if (turnstileContainerRef.current.dataset.rendered === 'true') return;
+      const id = window.turnstile.render(turnstileContainerRef.current, {
+        sitekey: captcha.siteKey,
+        theme: 'auto',
+        callback: (token: string) => {
+          setFormData(prev => ({ ...prev, cfTurnstileToken: token }));
+          setErrors(prev => ({ ...prev, captcha: undefined }));
+        },
+        'expired-callback': () => {
+          setFormData(prev => ({ ...prev, cfTurnstileToken: '' }));
+        },
+        'error-callback': () => {
+          setFormData(prev => ({ ...prev, cfTurnstileToken: '' }));
+        },
+      });
+      setTurnstileId(id);
+      turnstileContainerRef.current.dataset.rendered = 'true';
+    };
+
+    if (window.turnstile) {
+      renderWidget();
+      return;
+    }
+
+    if (!scriptEl) {
+      scriptEl = document.createElement('script');
+      scriptEl.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      scriptEl.async = true;
+      scriptEl.defer = true;
+      scriptEl.setAttribute('data-cf-turnstile', '');
+      scriptEl.onload = () => renderWidget();
+      document.head.appendChild(scriptEl);
+    } else {
+      // If script exists but not yet loaded, attach onload; else render immediately
+      if ((scriptEl as any).readyState === 'complete') renderWidget();
+      else scriptEl.addEventListener('load', renderWidget, { once: true });
+    }
+
+    return () => {
+      // No explicit unmount API required; token will expire/reset automatically
+    };
+  }, [language]);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -71,6 +135,12 @@ const Contact = () => {
       return;
     }
 
+    // If Turnstile is enabled, ensure we have a token before submitting
+    if (captcha.provider === 'turnstile' && captcha.siteKey && !formData.cfTurnstileToken) {
+      setErrors(prev => ({ ...prev, captcha: language === 'en' ? 'Please complete the captcha.' : 'Bitte Captcha bestätigen.' }));
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -88,7 +158,11 @@ const Contact = () => {
         /* Simuliertes Logging der Formdaten (bewusst ohne console, um Linting sauber zu halten) */
       }
       setSubmitStatus('success');
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: '', email: '', message: '', website: '', cfTurnstileToken: '' });
+      // Reset Turnstile widget (if available)
+      try {
+        if (window.turnstile && turnstileId) window.turnstile.reset?.(turnstileId);
+      } catch {}
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
@@ -235,6 +309,16 @@ const Contact = () => {
                   className="hidden"
                   aria-hidden="true"
                 />
+                {/* Optional Turnstile token: if you later add the widget, set this field from its callback */}
+                <input type="hidden" name="cfTurnstileToken" value={formData.cfTurnstileToken} readOnly />
+                {captcha.provider === 'turnstile' && captcha.siteKey && (
+                  <div className="mb-2">
+                    <div ref={turnstileContainerRef} className="cf-turnstile" aria-label={language === 'en' ? 'Captcha verification' : 'Captcha-Verifizierung'} />
+                    {errors.captcha && (
+                      <p className="mt-1 text-sm text-red-500">{errors.captcha}</p>
+                    )}
+                  </div>
+                )}
                 <div>
                   <label
                     htmlFor="name"

@@ -190,8 +190,12 @@ const Layout = () => {
           <div className="absolute left-4 top-1/2 -translate-y-1/2">
             {featureToggles.showPacmanIcon && <PacmanIcon />}
           </div>
-          <div className="text-center">
+          <div className="text-center space-y-2">
             <p className="text-gray-600 dark:text-gray-300">© 2025 Milan Koncz. All rights reserved.</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 flex justify-center gap-4">
+              <Link to="/impressum" className="hover:text-blue-600 dark:hover:text-blue-400 underline underline-offset-4">Impressum</Link>
+              <Link to="/datenschutz" className="hover:text-blue-600 dark:hover:text-blue-400 underline underline-offset-4">Datenschutzerklärung</Link>
+            </p>
           </div>
         </div>
       </footer>

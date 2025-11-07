@@ -13,6 +13,8 @@ const Portfolio = lazy(lazyImportWithRetry(() => import('./pages/Portfolio')));
 const Skills = lazy(lazyImportWithRetry(() => import('./pages/Skills')));
 const Contact = lazy(lazyImportWithRetry(() => import('./pages/Contact')));
 const NotFound = lazy(lazyImportWithRetry(() => import('./pages/NotFound')));
+const Impressum = lazy(lazyImportWithRetry(() => import('./pages/Impressum')));
+const Datenschutz = lazy(lazyImportWithRetry(() => import('./pages/Datenschutz')));
 
 // Loading component
 const Loading = () => (
@@ -75,6 +77,22 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <Pacman />
+          </Suspense>
+        )
+      },
+      {
+        path: 'impressum',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Impressum />
+          </Suspense>
+        )
+      },
+      {
+        path: 'datenschutz',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Datenschutz />
           </Suspense>
         )
       },

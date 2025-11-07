@@ -137,3 +137,23 @@ Zusammenfassung der SEO-Signale
 - Vollständige OG/Twitter Meta + strukturierte Daten (Person, WebSite) in `Home.tsx`.
 - Saubere Favicons (ICO + PNG 32x32 + PWA Icons).
 - Optional: Social Banner hinzufügen für bessere Teil-Vorschau.
+
+## Rechtliches (Impressum & Datenschutzerklärung)
+
+Seiten hinzugefügt (deutsch):
+- `/impressum` (Impressum mit Haftungshinweisen und Urheberrecht)
+- `/datenschutz` (DSGVO-konforme Datenschutzerklärung, statisch)
+
+Beide Seiten:
+- Mit `<meta name="robots" content="noindex,follow">` damit sie nicht im Index erscheinen (falls du sie indexieren willst → Tag entfernen + Sitemap ergänzen).
+- Footer-Links im `Layout.tsx` eingebunden (nicht in Hauptnavigation).
+
+Anpassungsstellen (Kommentare im Code gekennzeichnet):
+- Anschrift / Kontaktänderungen (`Impressum.tsx`, `Datenschutz.tsx`).
+- Falls du einen SMTP-Dienst konkret benennen willst (z. B. Mailjet, SendGrid) → Abschnitt "Kontaktformular" erweitern.
+- Analytics: Der Abschnitt passt sich an je nachdem ob `analytics.enabled` true/false ist (Plausible cookieless Annahme).
+- Neue Tools (z. B. Google Analytics, externe CDN, zusätzliche Cookies) müssen manuell ergänzt werden.
+
+Wenn du später einen anderen Rechtsstatus hast (z. B. Gewerbe / USt-ID): Abschnitt im Impressum ergänzen.
+
+IndexNow Hinweis zur Key-Änderung weiter oben beachten.

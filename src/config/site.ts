@@ -66,3 +66,10 @@ export const analytics = {
     /** Script URL for Plausible */
     scriptSrc: 'https://plausible.io/js/script.js',
 };
+
+export const captcha = {
+    /** Set provider to 'turnstile' to enable Cloudflare Turnstile; leave siteKey empty to disable on client. */
+    provider: 'turnstile' as 'turnstile' | 'none',
+    /** Turnstile site key (public). Secret belongs in server env TURNSTILE_SECRET_KEY. */
+    siteKey: '0x4AAAAAAB_sUqiozJeeFdCu',
+};
