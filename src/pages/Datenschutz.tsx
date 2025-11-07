@@ -32,7 +32,6 @@ export default function Datenschutz() {
                     <p className="m-0">Hafenstraße 35</p>
                     <p className="m-0">68159 Mannheim, Deutschland</p>
                     <p className="m-0">E-Mail: <a href={`mailto:${contact.email}`} className="text-blue-600 dark:text-blue-400 underline underline-offset-2">{contact.email}</a></p>
-                    <p className="text-sm italic text-gray-500 dark:text-gray-400">(Bitte bei Änderungen der Kontaktangaben hier aktualisieren.)</p>
                 </Section>
 
                 <Section title="Arten der verarbeiteten Daten / Kategorien betroffener Personen">
@@ -118,7 +117,7 @@ export default function Datenschutz() {
 
                 <Section title="Änderungen dieser Datenschutzerklärung">
                     <p>Ich behalte mir vor, diese Datenschutzerklärung bei Änderungen der Rechtslage oder des Angebots anzupassen.</p>
-                    <p className="text-sm italic text-gray-500 dark:text-gray-400">Bitte nach größeren Funktionsänderungen die Inhalte prüfen und anpassen.</p>
+                    
                 </Section>
             </div>
         </>

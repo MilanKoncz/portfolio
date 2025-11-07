@@ -35,7 +35,6 @@ export default function Impressum() {
                         Deutschland
                     </p>
                     <p className="m-0">E-Mail: <a href={`mailto:${contact.email}`} className="text-blue-600 dark:text-blue-400 underline underline-offset-2">{contact.email}</a></p>
-                    <p className="text-sm italic text-gray-500 dark:text-gray-400">(Bitte bei Änderungen der Anschrift oder zusätzlichen Angaben wie USt-IdNr. hier aktualisieren.)</p>
                 </Section>
 
                 <Section title="Verantwortlich für den Inhalt (§ 55 Abs. 2 RStV)">
