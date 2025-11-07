@@ -162,7 +162,7 @@ const Contact = () => {
       // Reset Turnstile widget (if available)
       try {
         if (window.turnstile && turnstileId) window.turnstile.reset?.(turnstileId);
-      } catch {}
+      } catch { }
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
